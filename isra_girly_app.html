@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Isra's Girly Era 💗</title>
+<style>
+:root {
+  --p1: #FF6BA8; --p2: #FF9CC2; --p3: #FFCDE0;
+  --p4: #FFF0F6; --p5: #FDE8F3;
+  --rose: #E0447A; --mauve: #C490A8; --ink: #2D0F22;
+  --muted: #A07890; --white: #FFFFFF;
+  --sage: #8FC89A; --warn: #F4A840;
+}
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+body { background:var(--p4); font-family:'Nunito',sans-serif; color:var(--ink); min-height:100vh; padding-bottom:80px; overflow-x:hidden; }
+
+.header { background:linear-gradient(135deg,var(--rose) 0%,var(--p1) 60%,var(--p2) 100%); padding:20px 20px 28px; position:relative; overflow:hidden; box-shadow:0 4px 24px rgba(224,68,122,0.3); }
+.header-bg { position:absolute;inset:0; background:radial-gradient(ellipse 80% 60% at 80% 20%,rgba(255,255,255,0.15) 0%,transparent 60%); }
+.header-top { display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;position:relative; }
+.header-greeting { font-size:12px;color:rgba(255,255,255,0.75);letter-spacing:1px; }
+.header-name { font-family:'Playfair Display',serif;font-size:26px;color:white;font-style:italic;margin-top:2px; }
+.header-avatar { width:46px;height:46px;border-radius:50%;background:rgba(255,255,255,0.25);display:flex;align-items:center;justify-content:center;font-size:24px;border:2px solid rgba(255,255,255,0.4); }
+.header-quote { background:rgba(255,255,255,0.18);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.3);border-radius:12px;padding:10px 14px;font-size:12px;color:white;font-style:italic;position:relative; }
+
+.streak-banner { margin:16px 16px 0;background:white;border-radius:16px;padding:14px 18px;display:flex;align-items:center;gap:14px;box-shadow:0 4px 16px rgba(224,68,122,0.12);border:1px solid var(--p3); }
+.streak-fire { font-size:32px; }
+.streak-text h3 { font-size:15px;font-weight:700;color:var(--ink); }
+.streak-text p { font-size:12px;color:var(--muted);font-weight:400; }
+.streak-count { margin-left:auto;background:linear-gradient(135deg,var(--p1),var(--rose));color:white;border-radius:12px;padding:6px 14px;font-weight:700;font-size:18px;box-shadow:0 3px 10px rgba(224,68,122,0.3); }
+
+.bottom-nav { position:fixed;bottom:0;left:0;right:0;background:white;border-top:1px solid var(--p3);display:flex;z-index:100;box-shadow:0 -4px 20px rgba(224,68,122,0.1); }
+.nav-btn { flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px 4px;gap:4px;cursor:pointer;transition:all 0.2s;border:none;background:none; }
+.nav-btn .nav-icon { font-size:22px;transition:transform 0.2s; }
+.nav-btn .nav-label { font-size:10px;color:var(--muted);font-weight:600;letter-spacing:0.5px;transition:color 0.2s; }
+.nav-btn.active .nav-icon { transform:scale(1.2); }
+.nav-btn.active .nav-label { color:var(--rose); }
+
+.page { display:none; }
+.page.active { display:block;animation:pageIn 0.3s ease; }
+@keyframes pageIn { from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);} }
+
+.sec-title { padding:20px 16px 8px;display:flex;align-items:center;justify-content:space-between; }
+.sec-title h2 { font-family:'Playfair Display',serif;font-size:20px;font-weight:400; }
+.sec-title h2 em { font-style:italic;color:var(--rose); }
+.sec-badge { background:var(--p3);color:var(--rose);padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700; }
+
+.routine-tabs { display:flex;gap:8px;padding:0 16px 16px; }
+.rtab { flex:1;padding:8px;border-radius:12px;border:2px solid var(--p3);background:white;cursor:pointer;text-align:center;transition:all 0.2s;font-size:13px;font-weight:600;color:var(--muted); }
+.rtab.active { background:linear-gradient(135deg,var(--p1),var(--rose));border-color:transparent;color:white;box-shadow:0 4px 12px rgba(224,68,122,0.3); }
+
+.routine-list { padding:0 16px;display:flex;flex-direction:column;gap:10px; }
+.r-step { background:white;border-radius:14px;padding:14px 16px;display:flex;gap:14px;align-items:center;box-shadow:0 2px 10px rgba(224,68,122,0.07);cursor:pointer;transition:all 0.25s;border:1.5px solid transparent; }
+.r-step:hover { border-color:var(--p3);transform:translateX(3px); }
+.r-step.checked { border-color:var(--sage);background:#F4FBF5; }
+.r-step.checked .r-num { background:linear-gradient(135deg,var(--sage),#5A9A68);box-shadow:0 3px 8px rgba(90,154,104,0.25); }
+.r-step.checked .r-title { text-decoration:line-through;opacity:0.5; }
+.r-step.checked .r-check { background:var(--sage);border-color:var(--sage); }
+.r-step.checked .r-check::after { opacity:1; }
+.r-num { width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--p1),var(--rose));color:white;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0;box-shadow:0 3px 8px rgba(224,68,122,0.25);transition:background 0.3s; }
+.r-content { flex:1; }
+.r-tag { font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--mauve);font-weight:700;margin-bottom:2px; }
+.r-title { font-size:14px;font-weight:600;margin-bottom:2px; }
+.r-product { font-size:12px;color:var(--muted);font-weight:400; }
+.r-time { font-size:11px;color:var(--p1);font-weight:700;flex-shrink:0; }
+.r-check { width:24px;height:24px;border-radius:50%;border:2px solid var(--p3);flex-shrink:0;position:relative;transition:all 0.2s; }
+.r-check::after { content:'✓';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:white;font-size:12px;font-weight:700;opacity:0;transition:opacity 0.2s; }
+
+.r-progress { margin:0 16px 16px;background:white;border-radius:12px;padding:12px 16px;box-shadow:0 2px 10px rgba(224,68,122,0.07); }
+.r-prog-row { display:flex;justify-content:space-between;margin-bottom:6px; }
+.r-prog-label { font-size:11px;text-transform:uppercase;letter-spacing:2px;color:var(--muted);font-weight:700; }
+.r-prog-count { font-size:12px;color:var(--rose);font-weight:700; }
+.r-prog-bar { height:6px;background:var(--p3);border-radius:3px;overflow:hidden; }
+.r-prog-fill { height:100%;background:linear-gradient(to right,var(--p1),var(--rose));border-radius:3px;transition:width 0.5s ease; }
+
+.tips-scroll { display:flex;gap:12px;padding:0 16px 16px;overflow-x:auto;scrollbar-width:none; }
+.tips-scroll::-webkit-scrollbar { display:none; }
+.tip-card { min-width:200px;background:white;border-radius:16px;padding:18px;box-shadow:0 4px 16px rgba(224,68,122,0.08);border-top:4px solid var(--p2);flex-shrink:0; }
+.tip-card-icon { font-size:28px;margin-bottom:8px; }
+.tip-card-title { font-family:'Playfair Display',serif;font-size:15px;margin-bottom:6px; }
+.tip-card-body { font-size:12px;color:var(--muted);line-height:1.6; }
+
+.products-grid { padding:0 16px;display:grid;grid-template-columns:1fr 1fr;gap:12px; }
+.prod-card { background:white;border-radius:16px;padding:16px;text-align:center;box-shadow:0 2px 12px rgba(224,68,122,0.08);cursor:pointer;transition:all 0.2s;border:2px solid transparent;position:relative; }
+.prod-card:hover { border-color:var(--p3);transform:translateY(-2px); }
+.prod-card.star { border-color:var(--p2); }
+.star-badge { position:absolute;top:8px;right:8px;background:linear-gradient(135deg,var(--p1),var(--rose));color:white;border-radius:20px;padding:2px 8px;font-size:9px;font-weight:700;letter-spacing:1px; }
+.prod-emoji { font-size:34px;margin-bottom:8px; }
+.prod-brand { font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--mauve);font-weight:700; }
+.prod-name { font-size:13px;font-weight:700;color:var(--ink);margin:4px 0;line-height:1.3; }
+.prod-when { font-size:11px;color:var(--muted); }
+.prod-desc-full { display:none;text-align:left;margin-top:12px;padding-top:12px;border-top:1px solid var(--p3);font-size:12px;color:var(--muted);line-height:1.6; }
+.prod-desc-full.open { display:block; }
+
+.grwm-header { background:linear-gradient(135deg,#C03068,var(--rose));margin:16px;border-radius:16px;padding:20px;color:white;display:flex;align-items:center;justify-content:space-between;box-shadow:0 6px 20px rgba(192,48,104,0.3); }
+.grwm-h-left h3 { font-family:'Playfair Display',serif;font-size:22px;font-style:italic; }
+.grwm-h-left p { font-size:12px;opacity:0.65;margin-top:3px; }
+.grwm-time { font-family:'Playfair Display',serif;font-size:30px; }
+.grwm-time-label { font-size:10px;opacity:0.6;letter-spacing:1px; }
+
+.grwm-list { padding:0 16px;display:flex;flex-direction:column;gap:10px; }
+.grwm-item { display:flex;gap:12px;align-items:flex-start;background:white;border-radius:14px;padding:14px 16px;box-shadow:0 2px 10px rgba(224,68,122,0.07);cursor:pointer;transition:all 0.2s; }
+.grwm-item:hover { transform:translateX(3px); }
+.grwm-item.done { opacity:0.55; }
+.grwm-item.done .grwm-title { text-decoration:line-through; }
+.grwm-time-col { min-width:52px;text-align:right;padding-top:2px; }
+.grwm-clock { font-family:'Playfair Display',serif;font-size:14px;color:var(--rose); }
+.grwm-dur { font-size:10px;color:var(--muted); }
+.grwm-dot { width:12px;height:12px;border-radius:50%;margin-top:4px;flex-shrink:0; }
+.grwm-content { flex:1; }
+.grwm-cat { font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--mauve);font-weight:700;margin-bottom:3px; }
+.grwm-title { font-size:14px;font-weight:600;margin-bottom:3px; }
+.grwm-body { font-size:12px;color:var(--muted);line-height:1.6; }
+
+.tracker-week { display:flex;gap:8px;padding:0 16px 16px; }
+.day-pill { flex:1;background:white;border-radius:12px;padding:10px 4px;text-align:center;box-shadow:0 2px 8px rgba(224,68,122,0.07);cursor:pointer;transition:all 0.2s;border:2px solid transparent; }
+.day-pill.today { border-color:var(--p1); }
+.day-pill.done-day { background:linear-gradient(135deg,var(--p1),var(--rose));border-color:transparent; }
+.day-pill.done-day .day-label,.day-pill.done-day .day-num { color:white; }
+.day-label { font-size:10px;color:var(--muted);font-weight:700;text-transform:uppercase; }
+.day-num { font-size:16px;font-weight:700;color:var(--ink);margin-top:2px; }
+.day-dot { width:6px;height:6px;border-radius:50%;background:var(--p3);margin:4px auto 0; }
+.day-pill.done-day .day-dot { background:rgba(255,255,255,0.5); }
+.day-pill.today .day-dot { background:var(--p1); }
+
+.habit-section { padding:0 16px; }
+.habit-title { font-family:'Playfair Display',serif;font-size:17px;margin-bottom:12px; }
+.habit-title em { font-style:italic;color:var(--rose); }
+.habit-item { background:white;border-radius:14px;padding:14px 16px;margin-bottom:10px;display:flex;align-items:center;gap:14px;box-shadow:0 2px 10px rgba(224,68,122,0.07);cursor:pointer;transition:all 0.2s; }
+.habit-item:hover { transform:translateX(3px); }
+.habit-emoji { font-size:24px; }
+.habit-content { flex:1; }
+.habit-name { font-size:14px;font-weight:600; }
+.habit-sub { font-size:12px;color:var(--muted); }
+.habit-toggle { width:44px;height:24px;border-radius:12px;background:var(--p3);position:relative;transition:background 0.3s;flex-shrink:0; }
+.habit-toggle::after { content:'';position:absolute;top:2px;left:2px;width:20px;height:20px;border-radius:50%;background:white;transition:transform 0.3s;box-shadow:0 2px 6px rgba(0,0,0,0.15); }
+.habit-item.on .habit-toggle { background:linear-gradient(135deg,var(--p1),var(--rose)); }
+.habit-item.on .habit-toggle::after { transform:translateX(20px); }
+
+.water-tracker { background:white;border-radius:16px;padding:16px;margin-bottom:14px;box-shadow:0 2px 10px rgba(224,68,122,0.07); }
+.water-title { font-size:14px;font-weight:700;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center; }
+.water-count { color:var(--rose); }
+.water-glasses { display:flex;gap:8px;flex-wrap:wrap; }
+.glass { width:36px;height:42px;border-radius:6px;border:2px solid var(--p3);background:transparent;cursor:pointer;transition:all 0.2s;position:relative; }
+.glass.filled { border-color:#7EC8E3;background:#EAF7FC; }
+.glass::after { content:'🫙';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:14px;opacity:0.4; }
+.glass.filled::after { content:'💧';opacity:1; }
+
+.quiz-card { margin:0 16px 14px;background:white;border-radius:16px;padding:20px;box-shadow:0 4px 16px rgba(224,68,122,0.08); }
+.quiz-q { font-family:'Playfair Display',serif;font-size:16px;margin-bottom:14px; }
+.quiz-options { display:grid;grid-template-columns:1fr 1fr;gap:8px; }
+.quiz-opt { padding:10px;border-radius:10px;border:2px solid var(--p3);background:white;font-size:13px;font-weight:500;text-align:center;cursor:pointer;transition:all 0.2s;color:var(--ink); }
+.quiz-opt:hover { border-color:var(--p1); }
+.quiz-opt.selected { background:linear-gradient(135deg,var(--p3),var(--p5));border-color:var(--p1);color:var(--rose); }
+.quiz-result { margin-top:16px;padding:14px;background:linear-gradient(135deg,var(--p4),white);border-radius:12px;border-left:4px solid var(--p1);font-size:13px;color:var(--muted);line-height:1.7;display:none; }
+.quiz-result.show { display:block; }
+.quiz-result strong { color:var(--ink);font-weight:700; }
+
+.pink-callout { margin:0 16px 16px;background:linear-gradient(135deg,var(--p1),var(--rose));border-radius:16px;padding:18px;box-shadow:0 6px 20px rgba(224,68,122,0.25);position:relative;overflow:hidden; }
+.pink-callout::before { content:'💗';position:absolute;top:-10px;right:12px;font-size:70px;opacity:0.1; }
+.pink-callout p { font-family:'Playfair Display',serif;font-style:italic;font-size:16px;color:white;line-height:1.6; }
+.pink-callout-tag { font-size:9px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.6);margin-bottom:6px;font-weight:700; }
+
+.spacer { height:16px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-bg"></div>
+  <div class="header-top">
+    <div>
+      <div class="header-greeting">Good morning, gorgeous ✨</div>
+      <div class="header-name">Isra's Girly Era 🎀</div>
+    </div>
+    <div class="header-avatar">👸</div>
+  </div>
+  <div class="header-quote">"Soft skin, pink lips, glowing girl energy 💗"</div>
+</div>
+
+<div class="streak-banner">
+  <div class="streak-fire">🔥</div>
+  <div class="streak-text"><h3>Skincare Streak</h3><p>Keep your routine going!</p></div>
+  <div class="streak-count" id="streakNum">0</div>
+</div>
+
+<!-- PAGE: TODAY -->
+<div class="page active" id="page-today">
+  <div class="sec-title">
+    <h2>Today's <em>Routine</em> 🌸</h2>
+    <span class="sec-badge" id="todayBadge">0 / 5</span>
+  </div>
+  <div class="routine-tabs">
+    <div class="rtab active" onclick="switchRoutine('morning',this)">☀️ Morning</div>
+    <div class="rtab" onclick="switchRoutine('night',this)">🌙 Night</div>
+  </div>
+  <div class="r-progress">
+    <div class="r-prog-row"><span class="r-prog-label" id="progLabel">Morning ☀️</span><span class="r-prog-count" id="progCount">0 / 5</span></div>
+    <div class="r-prog-bar"><div class="r-prog-fill" id="progFill" style="width:0%"></div></div>
+  </div>
+
+  <div class="routine-list" id="morningList">
+    <div class="r-step" onclick="checkStep(this)"><div class="r-num">1</div><div class="r-content"><div class="r-tag">Cleanse</div><div class="r-title">Dove Cleansing Mousse</div><div class="r-product">60 sec massage · lukewarm water · pat dry</div></div><div class="r-time">2 min</div><div class="r-check"></div></div>
+    <div class="r-step" onclick="checkStep(this)"><div class="r-num">2</div><div class="r-content"><div class="r-tag">Tone</div><div class="r-title">Laikou Sakura Toner</div><div class="r-product">Pat gently with palms · never rub</div></div><div class="r-time">30 sec</div><div class="r-check"></div></div>
+    <div class="r-step" onclick="checkStep(this)"><div class="r-num">3</div><div class="r-content"><div class="r-tag">Serum ⭐</div><div class="r-title">Essence Niacinamide Serum</div><div class="r-product">Shake first! · 3 drops · wait 60 sec</div></div><div class="r-time">2 min</div><div class="r-check"></div></div>
+    <div class="r-step" onclick="checkStep(this)"><div class="r-num">4</div><div class="r-content"><div class="r-tag">Moisturize</div><div class="r-title">Sakura Essence Cream</div><div class="r-product">Pea size · blend upward · light on T-zone</div></div><div class="r-time">1 min</div><div class="r-check"></div></div>
+    <div class="r-step" onclick="checkStep(this)"><div class="r-num">5</div><div class="r-content"><div class="r-tag">Protect ☀️</div><div class="r-title">SPF 30 — Always Last!</div><div class="r-product">Two finger lengths · wait 2 min before makeup</div></div><div class="r-time">2 min</div><div class="r-check"></div></div>
+  </div>
+
+  <div class="routine-list" id="nightList" style="display:none">
+    <div class="r-step" onclick="checkStep(this)"><div class="r-num">1</div><div class="r-content"><div class="r-tag">Double Cleanse</div><div class="r-title">Remove Makeup → Dove Mousse</div><div class="r-product">Micellar water first if wearing makeup</div></div><div class="r-time">3 min</div><div class="r-check"></div></div>
+    <div class="r-step" onclick="checkStep(this)"><div class="r-num">2</div><div class="r-content"><div class="r-tag">Tone</div><div class="r-title">Sakura Toner</div><div class="r-product">Pat — never rub. No cotton needed.</div></div><div class="r-time">30 sec</div><div class="r-check"></div></div>
+    <div class="r-step" onclick="checkStep(this)"><div class="r-num">3</div><div class="r-content"><div class="r-tag">Treat ⭐</div><div class="r-title">Essence Niacinamide Serum</div><div class="r-product">Shake! 4-5 drops at night · more generous</div></div><div class="r-time">2 min</div><div class="r-check"></div></div>
+    <div class="r-step" onclick="checkStep(this)"><div class="r-num">4</div><div class="r-content"><div class="r-tag">Night Cream ⭐</div><div class="r-title">Dr. Althea 345 Relief Cream</div><div class="r-product">Press generously · Centella + Ceramide magic 🌿</div></div><div class="r-time">2 min</div><div class="r-check"></div></div>
+    <div class="r-step" onclick="checkStep(this)"><div class="r-num">5</div><div class="r-content"><div class="r-tag">Lips</div><div class="r-title">Golden Scent Lip Balm</div><div class="r-product">Generous layer · every night without fail</div></div><div class="r-time">30 sec</div><div class="r-check"></div></div>
+  </div>
+
+  <div class="spacer"></div>
+  <div class="sec-title"><h2>Pink <em>Tips</em> 💅</h2></div>
+  <div class="tips-scroll">
+    <div class="tip-card"><div class="tip-card-icon">💧</div><div class="tip-card-title">Layer Thinnest First</div><div class="tip-card-body">Toner → Serum → Cream → SPF. Thicker products block thinner ones from absorbing. Never reverse!</div></div>
+    <div class="tip-card" style="border-top-color:var(--p1)"><div class="tip-card-icon">🌙</div><div class="tip-card-title">Never Sleep in Makeup</div><div class="tip-card-body">Foundation overnight clogs pores and speeds aging. Even if exhausted — cleanse. 3 minutes changes everything.</div></div>
+    <div class="tip-card" style="border-top-color:var(--rose)"><div class="tip-card-icon">☀️</div><div class="tip-card-title">SPF Indoors Too</div><div class="tip-card-body">UV rays pass through windows. Apply SPF every single morning — this prevents 80% of visible aging.</div></div>
+    <div class="tip-card" style="border-top-color:var(--mauve)"><div class="tip-card-icon">🤲</div><div class="tip-card-title">Press Don't Rub</div><div class="tip-card-body">Rubbing tugs delicate skin. Always press and pat serums and moisturizers in. Skin stays calmer.</div></div>
+    <div class="tip-card" style="border-top-color:var(--sage)"><div class="tip-card-icon">💤</div><div class="tip-card-title">Sleep is Skincare</div><div class="tip-card-body">Skin repairs 10pm–2am. 7–8 hours = glowing skin. Dr. Althea works magic during this window!</div></div>
+  </div>
+  <div class="spacer"></div>
+  <div class="pink-callout">
+    <div class="pink-callout-tag">Daily affirmation 💗</div>
+    <p>"You are that girl. Soft, glowing, and completely unbothered. 🎀"</p>
+  </div>
+  <div class="spacer"></div>
+</div>
+
+<!-- PAGE: PRODUCTS -->
+<div class="page" id="page-products">
+  <div class="sec-title"><h2>Your <em>Products</em> 💄</h2><span class="sec-badge">Tap to expand</span></div>
+  <div class="products-grid">
+    <div class="prod-card star" onclick="toggleDesc(this)"><span class="star-badge">⭐ HERO</span><div class="prod-emoji">🌿</div><div class="prod-brand">Dr. Althea</div><div class="prod-name">345 Relief Cream</div><div class="prod-when">Night only</div><div class="prod-desc-full">Premium Korean cream. Centella calms redness, Ceramide repairs barrier, Panthenol soothes. Use every single night — most powerful product you own. 🌿</div></div>
+    <div class="prod-card star" onclick="toggleDesc(this)"><span class="star-badge">⭐ HERO</span><div class="prod-emoji">💧</div><div class="prod-brand">Essence</div><div class="prod-name">Niacinamide Serum</div><div class="prod-when">AM + PM</div><div class="prod-desc-full">3% Niacinamide + Pomegranate. Controls oil, reduces redness, minimizes pores. SHAKE BEFORE USE! 3 drops morning, 4-5 at night. Holy grail.</div></div>
+    <div class="prod-card" onclick="toggleDesc(this)"><div class="prod-emoji">🫧</div><div class="prod-brand">Dove</div><div class="prod-name">Cleansing Mousse</div><div class="prod-when">AM + PM</div><div class="prod-desc-full">Gentle foam with beauty serum. 60 seconds massage, lukewarm water. Never use hot water — strips skin oils completely.</div></div>
+    <div class="prod-card" onclick="toggleDesc(this)"><div class="prod-emoji">🌸</div><div class="prod-brand">Laikou</div><div class="prod-name">Sakura Toner</div><div class="prod-when">Step 2 Daily</div><div class="prod-desc-full">Pat with palms — never use cotton or rub. Balances pH and helps serum absorb 3x better. Essential step!</div></div>
+    <div class="prod-card" onclick="toggleDesc(this)"><div class="prod-emoji">🌷</div><div class="prod-brand">Laikou</div><div class="prod-name">Sakura Essence Cream</div><div class="prod-when">Daytime only</div><div class="prod-desc-full">Light day moisturizer. Pea-sized amount, go light on T-zone. Perfect before SPF in the morning.</div></div>
+    <div class="prod-card" onclick="toggleDesc(this)"><div class="prod-emoji">☀️</div><div class="prod-brand">SPF 30</div><div class="prod-name">Sunscreen</div><div class="prod-when">Every morning</div><div class="prod-desc-full">Last step always. Two finger lengths. Wait 2 min before makeup. Non-negotiable! Upgrade to SPF 50 PA++++ next purchase.</div></div>
+    <div class="prod-card star" onclick="toggleDesc(this)"><span class="star-badge">✨ GLOW</span><div class="prod-emoji">✨</div><div class="prod-brand">L'Oréal Paris</div><div class="prod-name">Lumi Glotion 901</div><div class="prod-when">Mixed with foundation</div><div class="prod-desc-full">Mix 1 pump with KIKO Foundation for glass skin glow. Also use alone on cheekbones as subtle highlight. Your secret weapon! ✨</div></div>
+    <div class="prod-card" onclick="toggleDesc(this)"><div class="prod-emoji">💄</div><div class="prod-brand">KIKO Milano</div><div class="prod-name">Insta Moisture Foundation</div><div class="prod-when">Base makeup</div><div class="prod-desc-full">SPF 25, satin finish. Mix with Lumi Glotion. Apply with damp beauty blender, dab from center outward. Less is more for school!</div></div>
+    <div class="prod-card" onclick="toggleDesc(this)"><div class="prod-emoji">🌟</div><div class="prod-brand">KIKO Milano</div><div class="prod-name">Dark Circles Concealer</div><div class="prod-when">Under eyes</div><div class="prod-desc-full">Apply in upside-down triangle shape under eyes. Pat with ring finger only. Lifts and brightens entire face!</div></div>
+    <div class="prod-card star" onclick="toggleDesc(this)"><span class="star-badge">⭐ MULTI</span><div class="prod-emoji">🌹</div><div class="prod-brand">myBeauty</div><div class="prod-name">Rose Magic Cheek Oil</div><div class="prod-when">Blush + Lips</div><div class="prod-desc-full">Colour changing! 1-2 drops on fingertip, press onto cheeks for the most natural flush. Also a gorgeous lip topper. Reacts with your own skin pH — uniquely you! 🌹</div></div>
+    <div class="prod-card" onclick="toggleDesc(this)"><div class="prod-emoji">🌸</div><div class="prod-brand">Rhode</div><div class="prod-name">Peptide Lip Tint</div><div class="prod-when">Everyday lip</div><div class="prod-desc-full">Sheer pink with peptides for plumping. Apply over lipliner for a glossy healthy lip. Carry in school bag always! Your everyday lip 💗</div></div>
+    <div class="prod-card" onclick="toggleDesc(this)"><div class="prod-emoji">✏️</div><div class="prod-brand">Essence</div><div class="prod-name">8H Matte Lipliner</div><div class="prod-when">Always first on lips</div><div class="prod-desc-full">Dusty rose / mauve. Outline then FILL entire lips. Long-lasting base that stops colour fading. Always the first lip step.</div></div>
+    <div class="prod-card" onclick="toggleDesc(this)"><div class="prod-emoji">💋</div><div class="prod-brand">Nudestix</div><div class="prod-name">Kush Lip Oil</div><div class="prod-when">Center lips only</div><div class="prod-desc-full">Apply ONLY to center of upper and lower lip. Creates a 3D plumping effect. The photo-ready finishing touch! 💋</div></div>
+    <div class="prod-card" onclick="toggleDesc(this)"><div class="prod-emoji">🖤</div><div class="prod-brand">Eltocion</div><div class="prod-name">Mascara</div><div class="prod-when">Eyes</div><div class="prod-desc-full">ALWAYS curl lashes BEFORE mascara. Wiggle at root, pull upward. Two coats glam, one coat school. Skip lower lashes for cleaner look.</div></div>
+    <div class="prod-card star" onclick="toggleDesc(this)"><span class="star-badge">✨ SCENT</span><div class="prod-emoji">🍦</div><div class="prod-brand">PS...</div><div class="prod-name">Vanilla Gold EDP</div><div class="prod-when">Final step always</div><div class="prod-desc-full">Vanilla & Musk. Pulse points — wrists, neck. NEVER rub wrists. Moisturised skin holds fragrance 3x longer. Your signature. 🍦</div></div>
+  </div>
+  <div class="spacer"></div>
+</div>
+
+<!-- PAGE: GRWM -->
+<div class="page" id="page-grwm">
+  <div class="grwm-header">
+    <div class="grwm-h-left"><h3>School GRWM 🎀</h3><p>6:00 AM → 7:15 AM · 75 min</p></div>
+    <div><div class="grwm-time" id="liveTime">--:--</div><div class="grwm-time-label">RIGHT NOW</div></div>
+  </div>
+  <div style="padding:0 16px 12px">
+    <div class="r-prog-bar"><div class="r-prog-fill" id="grwmFill" style="width:0%"></div></div>
+    <div style="display:flex;justify-content:space-between;margin-top:5px;font-size:11px;color:var(--muted)"><span>6:00 AM</span><span id="grwmCount" style="color:var(--rose);font-weight:700">0 / 9 done</span><span>7:15 AM</span></div>
+  </div>
+  <div class="grwm-list" id="grwmList">
+    <div class="grwm-item" onclick="grwmTick(this)"><div class="grwm-time-col"><div class="grwm-clock">6:00</div><div class="grwm-dur">5 min</div></div><div class="grwm-dot" style="background:#E8C040"></div><div class="grwm-content"><div class="grwm-cat">Wake Up 💛</div><div class="grwm-title">Alarm + Water + Bathroom</div><div class="grwm-body">Don't snooze! Drink full glass of water. Cold splash on face.</div></div></div>
+    <div class="grwm-item" onclick="grwmTick(this)"><div class="grwm-time-col"><div class="grwm-clock">6:05</div><div class="grwm-dur">15 min</div></div><div class="grwm-dot" style="background:var(--sage)"></div><div class="grwm-content"><div class="grwm-cat">Skincare 🌿</div><div class="grwm-title">Full Morning Skincare</div><div class="grwm-body">Dove → Toner → Serum (brush teeth!) → Sakura Cream → SPF. Wait 2 min.</div></div></div>
+    <div class="grwm-item" onclick="grwmTick(this)"><div class="grwm-time-col"><div class="grwm-clock">6:12</div><div class="grwm-dur">8 min</div></div><div class="grwm-dot" style="background:#9A8EC0"></div><div class="grwm-content"><div class="grwm-cat">Outfit 💜 While SPF Absorbs</div><div class="grwm-title">Get Fully Dressed First</div><div class="grwm-body">Clothes before makeup! Lay outfit out the night before — saves 5 min. 🎀</div></div></div>
+    <div class="grwm-item" onclick="grwmTick(this)"><div class="grwm-time-col"><div class="grwm-clock">6:20</div><div class="grwm-dur">5 min</div></div><div class="grwm-dot" style="background:var(--p1)"></div><div class="grwm-content"><div class="grwm-cat">Makeup 💗 Base</div><div class="grwm-title">Glotion Mix + Concealer</div><div class="grwm-body">KIKO + Lumi Glotion mixed → damp beauty blender. KIKO concealer under eyes, ring finger pat.</div></div></div>
+    <div class="grwm-item" onclick="grwmTick(this)"><div class="grwm-time-col"><div class="grwm-clock">6:25</div><div class="grwm-dur">7 min</div></div><div class="grwm-dot" style="background:var(--rose)"></div><div class="grwm-content"><div class="grwm-cat">Makeup 💗 Eyes + Cheeks + Lips</div><div class="grwm-title">Curl → Mascara → Blush → Lips</div><div class="grwm-body">Curl → 1 coat mascara → Rose Magic blush → spoolie brows → Lipliner + Rhode Tint 💗</div></div></div>
+    <div class="grwm-item" onclick="grwmTick(this)"><div class="grwm-time-col"><div class="grwm-clock">6:32</div><div class="grwm-dur">2 min</div></div><div class="grwm-dot" style="background:#E8C040"></div><div class="grwm-content"><div class="grwm-cat">Scent ✨</div><div class="grwm-title">Vanilla Gold — Before Hair</div><div class="grwm-body">2 sprays — wrist + neck. Never rub wrists. Perfume before hair always!</div></div></div>
+    <div class="grwm-item" onclick="grwmTick(this)"><div class="grwm-time-col"><div class="grwm-clock">6:34</div><div class="grwm-dur">20 min</div></div><div class="grwm-dot" style="background:#9A8EC0"></div><div class="grwm-content"><div class="grwm-cat">Hair 💜</div><div class="grwm-title">Style Your Hair</div><div class="grwm-body">Detangle ends first. Decide style night before! Sleek bun, half up, slicked clips. 🎀</div></div></div>
+    <div class="grwm-item" onclick="grwmTick(this)"><div class="grwm-time-col"><div class="grwm-clock">6:57</div><div class="grwm-dur">15 min</div></div><div class="grwm-dot" style="background:var(--warn)"></div><div class="grwm-content"><div class="grwm-cat">Breakfast 🍳 Never Skip!</div><div class="grwm-title">Eat Something — Always</div><div class="grwm-body">Toast + egg, yogurt, or za'atar. Sit and eat calmly. Calm breakfast = calm day 💗</div></div></div>
+    <div class="grwm-item" onclick="grwmTick(this)"><div class="grwm-time-col"><div class="grwm-clock">7:12</div><div class="grwm-dur">🚌</div></div><div class="grwm-dot" style="background:var(--rose)"></div><div class="grwm-content"><div class="grwm-cat">Leave — 3 Min Early! 💗</div><div class="grwm-title">You're gorgeous — go! 🚌</div><div class="grwm-body">Quick lip touch. Bag check. Walk out confident. You look amazing. 💗✨</div></div></div>
+  </div>
+  <div class="spacer"></div>
+</div>
+
+<!-- PAGE: TRACKER -->
+<div class="page" id="page-tracker">
+  <div class="sec-title"><h2>Weekly <em>Tracker</em> 📅</h2></div>
+  <div class="tracker-week" id="weekView"></div>
+  <div style="padding:0 16px 12px">
+    <div class="water-tracker">
+      <div class="water-title">💧 Water Intake<span class="water-count"><span id="waterCount">0</span>/8 glasses</span></div>
+      <div class="water-glasses" id="waterGlasses"></div>
+    </div>
+  </div>
+  <div class="habit-section">
+    <div class="habit-title">Daily <em>Habits</em> 🌸</div>
+    <div class="habit-item" onclick="toggleHabit(this)"><div class="habit-emoji">🌸</div><div class="habit-content"><div class="habit-name">Morning Skincare</div><div class="habit-sub">5 steps done</div></div><div class="habit-toggle"></div></div>
+    <div class="habit-item" onclick="toggleHabit(this)"><div class="habit-emoji">🌙</div><div class="habit-content"><div class="habit-name">Night Skincare</div><div class="habit-sub">Dr. Althea applied</div></div><div class="habit-toggle"></div></div>
+    <div class="habit-item" onclick="toggleHabit(this)"><div class="habit-emoji">☀️</div><div class="habit-content"><div class="habit-name">SPF Applied</div><div class="habit-sub">Every single morning</div></div><div class="habit-toggle"></div></div>
+    <div class="habit-item" onclick="toggleHabit(this)"><div class="habit-emoji">💋</div><div class="habit-content"><div class="habit-name">Lip Balm at Night</div><div class="habit-sub">Golden Scent before bed</div></div><div class="habit-toggle"></div></div>
+    <div class="habit-item" onclick="toggleHabit(this)"><div class="habit-emoji">🍳</div><div class="habit-content"><div class="habit-name">Ate Breakfast</div><div class="habit-sub">Never skip!</div></div><div class="habit-toggle"></div></div>
+    <div class="habit-item" onclick="toggleHabit(this)"><div class="habit-emoji">💤</div><div class="habit-content"><div class="habit-name">8 Hours Sleep</div><div class="habit-sub">Skin repairs 10pm–2am</div></div><div class="habit-toggle"></div></div>
+    <div class="habit-item" onclick="toggleHabit(this)"><div class="habit-emoji">💧</div><div class="habit-content"><div class="habit-name">Drank Enough Water</div><div class="habit-sub">8 glasses today</div></div><div class="habit-toggle"></div></div>
+  </div>
+  <div class="spacer"></div>
+  <div class="sec-title"><h2>Skin <em>Check</em> 🔍</h2></div>
+  <div class="quiz-card">
+    <div class="quiz-q">How does your skin feel today? 💗</div>
+    <div class="quiz-options">
+      <div class="quiz-opt" onclick="skinCheck(this,'oily')">💦 Oily & shiny</div>
+      <div class="quiz-opt" onclick="skinCheck(this,'dry')">🏜️ Dry & tight</div>
+      <div class="quiz-opt" onclick="skinCheck(this,'balanced')">✨ Balanced & glowy</div>
+      <div class="quiz-opt" onclick="skinCheck(this,'sensitive')">🌡️ Red & sensitive</div>
+    </div>
+    <div class="quiz-result" id="skinResult"></div>
+  </div>
+  <div class="spacer"></div>
+  <div class="pink-callout">
+    <div class="pink-callout-tag">Remember 💗</div>
+    <p>"Consistency is the most beautiful thing you can do for your skin. Show up for yourself every day. 🌸"</p>
+  </div>
+  <div class="spacer"></div>
+</div>
+
+<nav class="bottom-nav">
+  <button class="nav-btn active" onclick="goTo('today',this)"><span class="nav-icon">🌸</span><span class="nav-label">Today</span></button>
+  <button class="nav-btn" onclick="goTo('products',this)"><span class="nav-icon">💄</span><span class="nav-label">Products</span></button>
+  <button class="nav-btn" onclick="goTo('grwm',this)"><span class="nav-icon">⏰</span><span class="nav-label">GRWM</span></button>
+  <button class="nav-btn" onclick="goTo('tracker',this)"><span class="nav-icon">📊</span><span class="nav-label">Tracker</span></button>
+</nav>
+
+<script>
+let activeRoutine = 'morning';
+let waterCount = 0;
+let streak = parseInt(localStorage.getItem('isra_streak') || '0');
+let lastDate = localStorage.getItem('isra_lastDate') || '';
+let daysCompleted = JSON.parse(localStorage.getItem('isra_days') || '[]');
+
+document.getElementById('streakNum').textContent = streak;
+
+function goTo(page, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-' + page).classList.add('active');
+  btn.classList.add('active');
+}
+
+function switchRoutine(type, el) {
+  document.querySelectorAll('.rtab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  activeRoutine = type;
+  document.getElementById('morningList').style.display = type === 'morning' ? 'flex' : 'none';
+  document.getElementById('nightList').style.display = type === 'night' ? 'flex' : 'none';
+  updateProgress();
+}
+
+function checkStep(el) {
+  el.classList.toggle('checked');
+  updateProgress();
+  const today = new Date().toDateString();
+  if (lastDate !== today) { streak++; lastDate = today; localStorage.setItem('isra_streak', streak); localStorage.setItem('isra_lastDate', today); document.getElementById('streakNum').textContent = streak; }
+}
+
+function updateProgress() {
+  const list = document.getElementById(activeRoutine + 'List');
+  const total = list.querySelectorAll('.r-step').length;
+  const done = list.querySelectorAll('.r-step.checked').length;
+  document.getElementById('progCount').textContent = done + ' / ' + total;
+  document.getElementById('progLabel').textContent = activeRoutine === 'morning' ? 'Morning ☀️' : 'Night 🌙';
+  document.getElementById('progFill').style.width = (done / total * 100) + '%';
+  document.getElementById('todayBadge').textContent = done + ' / ' + total;
+}
+
+function grwmTick(el) {
+  el.classList.toggle('done');
+  const list = document.getElementById('grwmList');
+  const total = list.querySelectorAll('.grwm-item').length;
+  const done = list.querySelectorAll('.grwm-item.done').length;
+  document.getElementById('grwmCount').textContent = done + ' / ' + total + ' done';
+  document.getElementById('grwmFill').style.width = (done / total * 100) + '%';
+}
+
+function toggleDesc(card) { card.querySelector('.prod-desc-full').classList.toggle('open'); }
+function toggleHabit(el) { el.classList.toggle('on'); }
+
+function buildWater() {
+  const c = document.getElementById('waterGlasses'); c.innerHTML = '';
+  for (let i = 0; i < 8; i++) {
+    const g = document.createElement('div');
+    g.className = 'glass' + (i < waterCount ? ' filled' : '');
+    g.onclick = () => { waterCount = waterCount === i+1 ? i : i+1; buildWater(); document.getElementById('waterCount').textContent = waterCount; };
+    c.appendChild(g);
+  }
+}
+buildWater();
+
+function buildWeek() {
+  const days = ['SU','MO','TU','WE','TH','FR','SA'];
+  const now = new Date(); const today = now.getDay();
+  const c = document.getElementById('weekView'); c.innerHTML = '';
+  for (let i = 0; i < 7; i++) {
+    const d = new Date(now); d.setDate(now.getDate() - today + i);
+    const ds = d.toDateString();
+    const pill = document.createElement('div');
+    pill.className = 'day-pill' + (i === today ? ' today' : '') + (daysCompleted.includes(ds) ? ' done-day' : '');
+    pill.innerHTML = `<div class="day-label">${days[i]}</div><div class="day-num">${d.getDate()}</div><div class="day-dot"></div>`;
+    pill.onclick = () => { const idx = daysCompleted.indexOf(ds); if (idx === -1) daysCompleted.push(ds); else daysCompleted.splice(idx,1); localStorage.setItem('isra_days', JSON.stringify(daysCompleted)); buildWeek(); };
+    c.appendChild(pill);
+  }
+}
+buildWeek();
+
+const skinAdvice = {
+  oily: '<strong>Oily day!</strong> Go light on moisturizer. Focus your Essence Serum on T-zone. Blot with tissue before makeup. Your niacinamide is working — keep going! 💧',
+  dry: '<strong>Dry today!</strong> Be more generous with Dr. Althea tonight. Add a second Sakura Cream layer. Drink more water! 🌷',
+  balanced: '<strong>Your routine is WORKING, girly! 🌟</strong> Balanced and glowing — this is what consistency looks like. Keep going! ✨💗',
+  sensitive: '<strong>Sensitive day!</strong> Skip exfoliation. Dr. Althea Relief Cream — Centella will calm you down fast. Be extra gentle. No rubbing today. 🌿'
+};
+function skinCheck(el, type) {
+  document.querySelectorAll('.quiz-opt').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  const r = document.getElementById('skinResult');
+  r.innerHTML = skinAdvice[type]; r.classList.add('show');
+}
+
+function updateClock() {
+  const now = new Date();
+  const el = document.getElementById('liveTime');
+  if (el) el.textContent = String(now.getHours()).padStart(2,'0') + ':' + String(now.getMinutes()).padStart(2,'0');
+}
+setInterval(updateClock, 1000); updateClock();
+</script>
+</body>
+</html>
